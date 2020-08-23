@@ -1,0 +1,15 @@
+{
+  "name": "discord-pfleger-bot",
+  "version": "0.0.0",
+  "description": "Ein Discord-Bot für Pfleger",
+  "main": "scr/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "marcotaub",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0"
+  }
+}
