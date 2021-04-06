@@ -1,0 +1,89 @@
+/*
+    else if(command === 'play'){
+      if(args.length === 0) {
+        if(discordDispatcher !== '') {
+          discordDispatcher.resume();
+        }else{
+          return msg.channel.send(`Kein Argumente angegeben, ${msg.author}! 🤔 (play youtubelink)`);
+        }
+      }else{
+        if (msg.member.voice.channel) {
+          const connection = await msg.member.voice.channel.join();
+          const dispatcher = connection.play(ytdl(`${args[0]}`, { filter: 'audioonly'}),{volume: 0.1,});
+          discordDispatcher = dispatcher;
+        } else {
+          return msg.reply('Du musst erst in einem Voice-Channel sein!');
+        }
+      }
+    }
+    else if(command === 'pause'){
+      if(discordDispatcher !== ''){
+        discordDispatcher.pause();
+      }
+    }
+    else if(command === 'volume'){
+      if (!args.length) {
+        return msg.channel.send(`Kein Argumente angegeben, ${msg.author}! 🤔 (volume <0.1-1.0>)`);
+      }
+      if(discordDispatcher !== ''){
+        discordDispatcher.setVolume(args[0]);
+      }
+    }
+    else if(command === 'leave'){
+      if(discordDispatcher !== ''){
+        discordDispatcher.destroy();
+      }
+    }
+    else if(command === 'help'){
+      const dmChannel = msg.author.createDM();
+      (await dmChannel).send(`🤖 Die Hilfe Seite - Pfleger Discord Bot 🤖`);
+      (await dmChannel).send(`🎵🎵🎵 MUSIK KOMMANDOS 🎵🎵🎵`);
+      (await dmChannel).send(`- #Pfleger play YOUTUBELINK (Spielt den Ton eines Youtube-Videos in deinem Channel ab)`);
+      (await dmChannel).send(`- #Pfleger play (Führt die letzte Wiedergabe fort)`);
+      (await dmChannel).send(`- #Pfleger pause (Pausiert das aktuelle Video)`);
+      (await dmChannel).send(`- #Pfleger volume 0.1-1.0 (Stellt die Lautstärke der Bots ein: Von 0.1 bis 1.0)`);
+      (await dmChannel).send(`- #Pfleger leave (Verlässt den aktuellen Channel)`);
+      (await dmChannel).send(`🐸🐸🐸 TROLL KOMMANDOS 🐸🐸🐸`);
+      (await dmChannel).send(`- #Pfleger rickroll @user channelid (Sendet @user einen getarnten Link im Channel mit der ID channelid)`);
+      (await dmChannel).send(`- #Pfleger trollmove userid channelid1 channelid2 wiedeholungen (Movet userid wiederholungen mal von channelid1 zu channelid2 und danach wieder zurück)`);
+      (await dmChannel).send(`- #Pfleger t @user (Schickt @user im aktuellen Channel eine zufällige Tourette Nachricht)`);
+      (await dmChannel).send(`- #Pfleger scream userid (Joint der UserID in den Channel und spielt einen zufälligen Ton ab)`);
+      msg.delete({ timeout: 1000 });
+    }
+  }else{
+    if(msg.author.id === '512296848044851201'){// Moritz: 512296848044851201
+      console.log("Moritz Command:", msg.content);
+      if (msg.content === `${prefix} ping`) {
+        msg.reply('pong');
+      } else if(command === 'scream'){
+        try{
+          if(!args[0].length){
+            return msg.channel.send(`Kein Argumente angegeben, ${msg.author}! 🤔 (scream userid)`);
+          }
+  
+          const userid = args[0];
+          const guild = client.guilds.cache.get(`577214111767592960`);
+          const targetUser = guild.members.cache.get('512296848044851201');
+          const currentChannel = targetUser.voice.channel;
+          msg.delete({ timeout: 1000 });
+  
+          const randomNumber = Math.floor(Math.random()*videolinks.length);
+          if (currentChannel) {
+            const connection = await currentChannel.join();
+            const dispatcher = connection.play(ytdl(`${videolinks[randomNumber]}`, { filter: 'audioonly'}));
+            dispatcher.setVolume(1.0);
+            dispatcher.on('finish', () => {
+              connection.disconnect();
+            });
+          } else {
+            return msg.reply('UserID muss erst in einem Voice-Channel sein!');
+          }
+  
+        }catch(error){
+          return msg.channel.send(`Ein Fehler ist aufgetreten, ${msg.author}! 🤔 ${error}`);
+        }
+      }
+    } else {
+      return msg.channel.send(`Du hast leider keinen Zugriff, ${msg.author}! 🤔`);
+    }
+  } */
