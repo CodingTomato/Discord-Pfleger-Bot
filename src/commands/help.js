@@ -3,8 +3,11 @@ const prefix = process.env.PREFIX;
 module.exports = {
 	name: 'help',
 	description: 'List all commands or info about a specific command.',
+    icon: 'mdi-help-circle',
+    category: 'Tools',
+    webExe: false,
 	aliases: ['commands', 'hilfe', 'kommandos', 'befehle'],
-    usage: '<command name>',
+    usage: '<command-name>',
 	execute(message, args, client) {
 		const data = [];
         const { commands } = message.client;
