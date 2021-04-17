@@ -1,5 +1,8 @@
 module.exports = {
 	name: 't',
+    icon: 'mdi-wheelchair-accessibility',
+    category: 'Troll',
+    webExe: true,
     args: true,
     usage: '<@user>',
     aliases: ['tourette'],
