@@ -65,7 +65,7 @@ module.exports.start = function (prefix, token) {
 };
 
 module.exports.exeCommand = function (msg) {
-    const prefix = process.env.PREFIX; 
+    const prefix = process.env.STANDARD_PREFIX; 
 
     const args = msg.slice(prefix.length).trim().split(' ');
     const commandName = args.shift().toLowerCase();
