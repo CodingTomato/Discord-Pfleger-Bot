@@ -104,6 +104,7 @@ module.exports.getStatus = function () {
     if(isConnected){
         status = {
             botstatus: client.presence.status,
+            prefix: process.env.STANDARD_PREFIX,
             silencedUserIDs: silencedUserIDs,
             channels: client.channels,
             users: client.users,
@@ -112,6 +113,8 @@ module.exports.getStatus = function () {
     } else {
         status = {
             botstatus: "offline",
+            prefix: process.env.STANDARD_PREFIX,
+            silencedUserIDs: silencedUserIDs,
         };
     }
 
