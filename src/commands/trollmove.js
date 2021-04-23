@@ -32,12 +32,12 @@ module.exports = {
         msg.delete({ timeout: 1000 });
 
         if(currentChannel){
-        for(let i = 0; i < wiederholungen; i += 1){
-            await sleep(delay);
-            targetUser.voice.setChannel(channel1, "Troll");
-            await sleep(delay);
-            targetUser.voice.setChannel(channel2, "Troll");
-        }
+            for(let i = 0; i < wiederholungen; i += 1){
+                await sleep(delay);
+                targetUser.voice.setChannel(channel1, "Troll");
+                await sleep(delay);
+                targetUser.voice.setChannel(channel2, "Troll");
+            }
 
         targetUser.voice.setChannel(currentChannel, "Troll");
         }

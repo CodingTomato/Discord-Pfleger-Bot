@@ -56,6 +56,28 @@ app.put('/api/addSilenceUser', function (req, res) {
   return res.send("Sent userid");
 });
 
+app.put('/api/addStickyUser', function (req, res) {
+  discordBot.addStickyUser(req.body.userid,req.body.channelid);
+  return res.send("Sent userid and channelid");
+});
+
+app.get('/api/startStickyMover', function (req, res) {
+  discordBot.startStickyMover();
+  return res.send("Started Mover");
+});
+
+app.get('/api/stopStickyMover', function (req, res) {
+  discordBot.stopStickyMover();
+  return res.send("Stop Mover");
+});
+
+app.post('/api/getChannelFromID', function (req, res) {
+  let channel = {
+    name: discordBot.getChannelFromID(req.body.channelid),
+  }
+  return res.send(channel);
+});
+
 app.listen(port, () => {
   logService.log(`Pfleger Bot API listening on port ${port}`);
 })

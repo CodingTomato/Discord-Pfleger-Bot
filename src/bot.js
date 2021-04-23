@@ -5,11 +5,21 @@ const logService = require('./log.js');
 let client = new Discord.Client();
 client.commands = new Discord.Collection();
 let isConnected = false;
+
 let silencedUserIDs = [];
+let stickyUserIDs = [];
+let stickyMover = false;
+let stickyMoverIntervall;
+
 let dispatcher;
 let connection;
 
 module.exports.start = function (prefix, token) { 
+    
+    stickyUserIDs = [];
+    clearInterval(stickyMoverIntervall);
+    stickyMover = false;
+
     logService.log("Trying to connect bot to Discord ...");
     client = new Discord.Client();
     client.commands = new Discord.Collection();
@@ -27,9 +37,9 @@ module.exports.start = function (prefix, token) {
     }
 
     client.on('message', async msg => {
-        if (msg.content.startsWith(prefix) && !msg.author.bot) {
+        if (msg.content.startsWith(process.env.STANDARD_PREFIX) && !msg.author.bot) {
             if (msg.author.id === '138377599335268353' || msg.author.id === '514467933494181912'){
-                const args = msg.content.slice(prefix.length).trim().split(' ');
+                const args = msg.content.slice(process.env.STANDARD_PREFIX.length).trim().split(' ');
                 const commandName = args.shift().toLowerCase();
 
                 const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
@@ -37,7 +47,7 @@ module.exports.start = function (prefix, token) {
                 if (command.args && !args.length) {
                     let reply = `Du hast keine Argumente angegeben, ${msg.author}!`;
                     if (command.usage) {
-                        reply += `\nRichtig wäre: \`${prefix} ${command.name} ${command.usage}\``;
+                        reply += `\nRichtig wäre: \`${process.env.STANDARD_PREFIX} ${command.name} ${command.usage}\``;
                     }
 
                     return msg.channel.send(reply);
@@ -84,6 +94,40 @@ module.exports.addSilenceUser = function (userid) {
     silencedUserIDs.push(userid);
 };
 
+module.exports.addStickyUser = function (userid, channelid) {
+    stickyUserIDs.push({userid: userid, channelid: channelid});
+};
+
+module.exports.startStickyMover = function () {
+    if(!stickyMover){
+        logService.log("Start StickyMover");
+        stickyMover = true;
+        stickyMoverIntervall = setInterval(() => {
+            stickyUserIDs.forEach(stick => {
+                const guild = client.guilds.cache.get(`577214111767592960`);
+                const targetUser = guild.members.cache.get(`${stick.userid}`);
+        
+                const currentChannel = targetUser.voice.channelID;
+                const stickyChannel = client.channels.cache.get(`${stick.channelid}`);
+    
+                if(currentChannel){
+                    if(currentChannel !== stick.channelid){
+                        targetUser.voice.setChannel(stickyChannel, "Troll");
+                    }
+                }
+            });
+        }, 1000);
+    }
+};
+
+module.exports.stopStickyMover = function () {
+    if(stickyMover){
+        logService.log("Stop StickyMover");
+        stickyMover = false;
+        clearInterval(stickyMoverIntervall);
+    }
+};
+
 module.exports.removeSilenceUser = function (userid) {
     silencedUserIDs = silencedUserIDs.filter((value) => {
         return value != userid;
@@ -98,6 +142,11 @@ module.exports.getClient = function () {
     return client;
 };
 
+module.exports.getChannelFromID = function (channelid){
+    const targetChannel = client.channels.cache.get(`${channelid}`);
+    return targetChannel;
+}
+
 module.exports.getStatus = function () {
     let status = {};
     
@@ -106,6 +155,8 @@ module.exports.getStatus = function () {
             botstatus: client.presence.status,
             prefix: process.env.STANDARD_PREFIX,
             silencedUserIDs: silencedUserIDs,
+            stickyUserIDs: stickyUserIDs,
+            stickyMoverEnabled: stickyMover,
             channels: client.channels,
             users: client.users,
             commands: client.commands,
