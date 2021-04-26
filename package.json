@@ -17,6 +17,8 @@
     "express": "^4.17.1",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.3.0",
+    "google-tts-api": "^2.0.2",
+    "lorem-ipsum": "^2.0.3",
     "opusscript": "0.0.7",
     "request": "^2.88.2",
     "ytdl-core": "^4.5.0"

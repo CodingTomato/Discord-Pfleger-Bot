@@ -61,6 +61,17 @@ app.put('/api/addStickyUser', function (req, res) {
   return res.send("Sent userid and channelid");
 });
 
+app.put('/api/removeStickyUser', function (req, res) {
+  discordBot.removeStickyUser(req.body.userid);
+  console.log("Got Request");
+  return res.send("Removed userid");
+});
+
+app.get('/api/resetStickyUser', function (req, res) {
+  discordBot.resetStickyUser();
+  return res.send("Reset StickyUsers");
+});
+
 app.get('/api/startStickyMover', function (req, res) {
   discordBot.startStickyMover();
   return res.send("Started Mover");
