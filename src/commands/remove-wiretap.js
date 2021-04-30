@@ -17,6 +17,7 @@ module.exports = {
             discordBot.recordConnection.disconnect();
             discordBot.connection.disconnect();
         }
+        logService.log("Stopped Wiretap");
 
         msg.delete();
 	},

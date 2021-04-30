@@ -32,6 +32,8 @@ module.exports = {
         discordBot.dispatcher = discordBot.connection.play(url);
         discordBot.dispatcher.setVolume(1.0);
 
+        logService.log("Spoke TTS Message");
+
         discordBot.dispatcher.on('finish', () => {
             discordBot.connection.disconnect();
         });

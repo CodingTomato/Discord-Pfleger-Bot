@@ -1,3 +1,5 @@
+const logService = require('../log');
+
 module.exports = {
 	name: 'dc',
     aliases: ['disconnect'],
@@ -26,16 +28,18 @@ module.exports = {
             for(let i = 0; i < wiederholungen; i += 1){
                 try {
                     targetUser.voice.kick("Arsch");
+                    logService.log(`Kicked ${targetUser.user.username} from voice channel`);
                     await sleep(delay);
                 } catch (error) {
-                    // TODP
+                    logService.error(error);
                 }
             }
         } else {
             try {
                 targetUser.voice.kick("Arsch");
+                logService.log(`Kicked ${targetUser.user.username} from voice channel`);
             } catch (error) {
-                // TODP
+                logService.error(error);
             }
         }
 	},
@@ -53,12 +57,14 @@ module.exports = {
             for(let i = 0; i < wiederholungen; i += 1){
                 await sleep(delay);
                 targetUser.voice.kick("Arsch");
+                logService.log(`Kicked ${targetUser.user.username} from voice channel`);
             }
         } else {
             try {
                 targetUser.voice.kick("Arsch");
+                logService.log(`Kicked ${targetUser.user.username} from voice channel`);
             } catch (error) {
-                // TODP
+                logService.error(error);
             }
         }
 	},

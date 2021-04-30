@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const config = require('../config');
 
 
 const JSONbodyParser = require('body-parser');
@@ -38,48 +39,84 @@ app.get('/api/getLogs', function (req, res) {
   res.send(logService.getLogs());
 });
 
-app.get('/api/startBot', function (req, res) {
-  res.send(discordBot.start(process.env.PREFIX, process.env.DISCORD_BOT_TOKEN));
+app.post('/api/startBot', function (req, res) {
+  if(config.admin === req.body.password){
+    return res.send(discordBot.start(process.env.PREFIX, process.env.DISCORD_BOT_TOKEN));
+  }
+
+  return res.send("Auth unsuccessfull");
 });
 
-app.get('/api/stopBot', function (req, res) {
-  res.send(discordBot.stop());
+app.post('/api/stopBot', function (req, res) {
+  console.log(req.body);
+  if(config.admin === req.body.password){
+    res.send(discordBot.stop());
+  } else {
+    res.send("Auth unsuccessfull" + req.body.password);
+  }
 });
 
 app.put('/api/exeCommand', function (req, res) {
-  discordBot.exeCommand(req.body.msg);
-  return res.send("Sent command");
+  if(config.admin === req.body.password){
+    discordBot.exeCommand(req.body.msg);
+    return res.send("Sent command");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
 app.put('/api/addSilenceUser', function (req, res) {
-  discordBot.addSilenceUser(req.body.userid);
-  return res.send("Sent userid");
+  if(config.admin === req.body.password){
+    discordBot.addSilenceUser(req.body.userid);
+    return res.send("Sent userid");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
 app.put('/api/addStickyUser', function (req, res) {
-  discordBot.addStickyUser(req.body.userid,req.body.channelid);
-  return res.send("Sent userid and channelid");
+  if(config.admin === req.body.password){
+    discordBot.addStickyUser(req.body.userid,req.body.channelid);
+    return res.send("Sent userid and channelid");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
 app.put('/api/removeStickyUser', function (req, res) {
-  discordBot.removeStickyUser(req.body.userid);
-  console.log("Got Request");
-  return res.send("Removed userid");
+  if(config.admin === req.body.password){
+    discordBot.removeStickyUser(req.body.userid);
+    return res.send("Removed userid");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
-app.get('/api/resetStickyUser', function (req, res) {
-  discordBot.resetStickyUser();
-  return res.send("Reset StickyUsers");
+app.post('/api/resetStickyUser', function (req, res) {
+  if(config.admin === req.body.password){
+    discordBot.resetStickyUser();
+    return res.send("Reset StickyUsers");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
-app.get('/api/startStickyMover', function (req, res) {
-  discordBot.startStickyMover();
-  return res.send("Started Mover");
+app.post('/api/startStickyMover', function (req, res) {
+  if(config.admin === req.body.password){
+    discordBot.startStickyMover();
+    return res.send("Started Mover");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
-app.get('/api/stopStickyMover', function (req, res) {
-  discordBot.stopStickyMover();
-  return res.send("Stop Mover");
+app.post('/api/stopStickyMover', function (req, res) {
+  if(config.admin === req.body.password){
+    discordBot.stopStickyMover();
+    return res.send("Stop Mover");
+  } else {
+    res.send("Auth unsuccessfull");
+  }
 });
 
 app.post('/api/getChannelFromID', function (req, res) {

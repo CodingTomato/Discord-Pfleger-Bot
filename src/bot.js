@@ -11,6 +11,7 @@ let silencedUserIDs = [];
 let stickyUserIDs = [];
 let stickyMover = false;
 let stickyMoverIntervall;
+let badMsgReactionUserIDs = ["512296848044851201",];
 
 let deafCheckerIntervall;
 
@@ -100,6 +101,19 @@ const lorem = new LoremIpsum({
             if(silencedUserIDs.indexOf(msg.author.id) >= 0){
                 msg.delete();
             }
+            if(badMsgReactionUserIDs.indexOf(msg.author.id) >= 0){
+                msg.react('🤮');
+                msg.react('🤢');
+                msg.react('🤕');
+                msg.react('👎');
+                msg.react('😡');
+                msg.react('🤬');
+                msg.react('😠');
+                msg.react('👿');
+                msg.react('💩');
+                msg.react('🙈');
+                msg.react('👨‍🦼');
+            }
         }
     });
 
@@ -153,6 +167,7 @@ module.exports.getStatus = function () {
             prefix: process.env.STANDARD_PREFIX,
             silencedUserIDs: silencedUserIDs,
             stickyUserIDs: stickyUserIDs,
+            badMsgReactionUserIDs: badMsgReactionUserIDs,
             stickyMoverEnabled: stickyMover,
             channels: client.channels,
             users: client.users,
@@ -163,6 +178,7 @@ module.exports.getStatus = function () {
             botstatus: "offline",
             prefix: process.env.STANDARD_PREFIX,
             silencedUserIDs: silencedUserIDs,
+            badMsgReactionUserIDs: badMsgReactionUserIDs,
         };
     }
 
@@ -179,7 +195,23 @@ module.exports.getChannelFromID = function (channelid){
  * END GETTERS
  */
 
-
+/**
+ * START BADMESSAGEREACTION USER
+ */
+ module.exports.addBadReactionMessageUser = function (userid) {
+    badMsgReactionUserIDs.push(userid.toString());
+};
+module.exports.removeBadReactionMessageUser = function (userid) {
+    badMsgReactionUserIDs = badMsgReactionUserIDs.filter((value) => {
+        return value != userid;
+    });
+};
+module.exports.resetBadReactionMessageUser = function (userid) {
+    badMsgReactionUserIDs = [];
+};
+/**
+ * END BADMESSAGEREACTION USER
+ */
 
 /**
  * START STICKY USER MOVE

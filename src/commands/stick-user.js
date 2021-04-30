@@ -1,5 +1,6 @@
 const prefix = process.env.PREFIX;
 const discordBot = require('../bot.js');
+const logService = require('../log.js');
 
 module.exports = {
 	name: 'stick-user',
@@ -16,10 +17,11 @@ module.exports = {
         }
 
         msg.delete();
-
+        logService.log(`Sticked ${args[0]} to ${args[1]}`);
         discordBot.addStickyUser(args[0],args[1]);
 	},
     executeAPI(msg, args, client) {
+        logService.log(`Sticked ${args[0]} to ${args[1]}`);
         discordBot.addStickyUser(args[0],args[1]);
 	},
 };

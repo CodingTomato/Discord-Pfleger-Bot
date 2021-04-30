@@ -1,4 +1,5 @@
 const prefix = process.env.PREFIX;
+const logService = require('../log');
 
 module.exports = {
 	name: 'mask',
@@ -22,6 +23,8 @@ module.exports = {
         client.user.setAvatar(targetUser.user.displayAvatarURL());
         botUser.setNickname(targetUser.user.username);
 
+        logService.log(`Masked bot as ${targetUser.user.username}`);
+
         msg.delete();
 	},
     async executeAPI(msg, args, client) {
@@ -32,5 +35,7 @@ module.exports = {
 
         client.user.setAvatar(targetUser.user.displayAvatarURL());
         botUser.setNickname(targetUser.user.username);
+
+        logService.log(`Masked bot as ${targetUser.user.username}`);
 	},
 };

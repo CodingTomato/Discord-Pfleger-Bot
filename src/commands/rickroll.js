@@ -8,7 +8,7 @@ module.exports = {
     icon: 'mdi-hand-okay',
     category:'Troll',
     webExe: true,
-    usage: '<@user> <channelid>',
+    usage: '<userid> <channelid>',
 	description: 'Rickroll an user!',
 	execute(msg, args, client) {
         if(!args[0] || !args[1]){
@@ -29,10 +29,10 @@ module.exports = {
             "https://www.youtube.com/watch?v=4bOcKgQssdA"
         ];
       
-        const taggedUser = msg.mentions.users.first();
+        const userid = args[0];
         const messageChannel = client.channels.cache.get(args[1]);
 
-        messageChannel.send(`Schau dir mal dieses Video an <@${taggedUser.id}> 😯`);
+        messageChannel.send(`Schau dir mal dieses Video an <@${userid}> 😯`);
 
         msg.delete({timeout:500});
 
@@ -56,10 +56,10 @@ module.exports = {
             "https://www.youtube.com/watch?v=4bOcKgQssdA"
         ];
       
-        const taggedUser = msg.mentions.users.first();
+        const userid = args[0];
         const messageChannel = client.channels.cache.get(args[1]);
 
-        messageChannel.send(`Schau dir mal dieses Video an <@${taggedUser.id}> 😯`);
+        messageChannel.send(`Schau dir mal dieses Video an <@${userid}> 😯`);
 
         const randomNumber = Math.floor(Math.random()*videolinks.length);
 

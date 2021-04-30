@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core');
 const discordBot = require('../bot.js');
+const logService = require('../log');
 
 module.exports = {
 	name: 'play',
@@ -33,6 +34,8 @@ module.exports = {
         discordBot.connection = await targetChannel.join();
         discordBot.dispatcher = discordBot.connection.play(ytdl(`${videoURL}`, { filter: 'audioonly'}));
         
+        logService.log(`Started playing ${videoURL}`)
+
         discordBot.dispatcher.setVolume(1.0);
         
         discordBot.dispatcher.on('finish', () => {

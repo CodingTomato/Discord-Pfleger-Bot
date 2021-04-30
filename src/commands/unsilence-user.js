@@ -1,5 +1,6 @@
 const prefix = process.env.PREFIX;
 const discordBot = require('../bot.js');
+const logService = require('../log.js');
 
 module.exports = {
 	name: 'reset-silenced',
@@ -13,8 +14,10 @@ module.exports = {
 	execute(msg, args, client) {
         msg.delete();
         discordBot.resetSilencedUser();
+        logService.log("Reset silenceduser list");
 	},
     executeAPI(msg, args, client) {
         discordBot.resetSilencedUser();
+        logService.log("Reset silenceduser list");
 	},
 };

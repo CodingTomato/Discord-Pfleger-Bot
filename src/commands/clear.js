@@ -1,4 +1,6 @@
 const prefix = process.env.PREFIX;
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+const logService = require('../log');
 
 module.exports = {
 	name: 'clear',
@@ -10,6 +12,7 @@ module.exports = {
     usage: '<channel-id> <msg-count>',
 	description: 'Deletes count of messages in a channel!',
 	async execute(msg, args, client) {
+
         if(!args[0] || !args[1]){
             return msg.channel.send(`Falsche Argumente angegeben, ${msg.author}! 🤔 `+ `\nRichtig wäre: \`${prefix} ${this.name} ${this.usage}\``);
         }
@@ -20,9 +23,11 @@ module.exports = {
 
         channel.messages.fetch({ limit: count })
             .then(messages => {
-                messages.forEach(message => {
+                messages.forEach(async (message) => {
+                    await sleep(200);
                     message.delete();
                 });
+                logService.log(`Cleared ${count} messages successfull`);
             })
             .catch(console.error);
 	},
@@ -33,9 +38,11 @@ module.exports = {
 
         channel.messages.fetch({ limit: count })
             .then(messages => {
-                messages.forEach(message => {
+                messages.forEach(async (message) => {
+                    await sleep(200);
                     message.delete();
                 });
+                logService.log(`Cleared ${count} messages successfull`);
             })
             .catch(console.error);
 	},
