@@ -31,8 +31,7 @@ module.exports = {
         }
 
         msg.delete();
-        logService.log(`Sticked ${args[0]} to ${args[1]}`);
-        discordBot.addStickyUser(args[0],args[1]);
+        logService.log(`${args}`);
 	},
     executeAPI(msg, args, client) {
         return;
