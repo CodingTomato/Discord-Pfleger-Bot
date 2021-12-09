@@ -52,9 +52,9 @@ const lorem = new LoremIpsum({
     }
 
     client.on('message', async msg => {
-        if (msg.content.startsWith(process.env.STANDARD_PREFIX) && !msg.author.bot) {
+        if (msg.content.startsWith(process.env.PREFIX) && !msg.author.bot) {
             if (msg.author.id === '138377599335268353' || msg.author.id === '514467933494181912'){
-                const args = msg.content.slice(process.env.STANDARD_PREFIX.length).trim().split(' ');
+                const args = msg.content.slice(process.env.PREFIX.length).trim().split(' ');
                 const commandName = args.shift().toLowerCase();
 
                 const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
@@ -62,7 +62,7 @@ const lorem = new LoremIpsum({
                 if (command.args && !args.length) {
                     let reply = `Du hast keine Argumente angegeben, ${msg.author}!`;
                     if (command.usage) {
-                        reply += `\nRichtig wäre: \`${process.env.STANDARD_PREFIX} ${command.name} ${command.usage}\``;
+                        reply += `\nRichtig wäre: \`${process.env.PREFIX} ${command.name} ${command.usage}\``;
                     }
 
                     return msg.channel.send(reply);
@@ -132,7 +132,7 @@ module.exports.stop = function () {
     }
 }
 module.exports.exeCommand = function (msg) {
-    const prefix = process.env.STANDARD_PREFIX; 
+    const prefix = process.env.PREFIX; 
 
     const args = msg.slice(prefix.length).trim().split(' ');
     const commandName = args.shift().toLowerCase();
@@ -164,7 +164,7 @@ module.exports.getStatus = function () {
     if(isConnected){
         status = {
             botstatus: client.presence.status,
-            prefix: process.env.STANDARD_PREFIX,
+            prefix: process.env.PREFIX,
             silencedUserIDs: silencedUserIDs,
             stickyUserIDs: stickyUserIDs,
             badMsgReactionUserIDs: badMsgReactionUserIDs,
@@ -176,7 +176,7 @@ module.exports.getStatus = function () {
     } else {
         status = {
             botstatus: "offline",
-            prefix: process.env.STANDARD_PREFIX,
+            prefix: process.env.PREFIX,
             silencedUserIDs: silencedUserIDs,
             badMsgReactionUserIDs: badMsgReactionUserIDs,
         };

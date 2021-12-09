@@ -9,7 +9,7 @@ const config = require('../config');
 const JSONbodyParser = require('body-parser');
 
 
-const port = process.env.API_PORT;
+const port = process.env.API_PORT || 1405;
 const discordBot = require('./bot.js');
 const logService = require('./log.js');
 
